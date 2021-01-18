@@ -1,0 +1,41 @@
+<!-- about.html-->
+
+{% extends "base.html" %}
+{% block title %}Tracker{% endblock %}
+{% block body %}
+<div class="jumbotron" style="padding-top:10px; padding-bottom:10px">
+  <h2 style="margin-top:10px;">Shopping List Tracker</h2>
+  <p>Scan an item to add it to the list. Tap an item for more actions.</p>
+  <form method="POST" action="/additem">
+    UPC/EAN/UCC-13: <input type="text" name="bcval" autofocus="autofocus" required><br>
+    <input type="submit" value="Submit" hidden="yes">
+  </form>
+  {% if error %}
+    <div>
+      <p>ERROR! {{error}}</p>
+    </div>
+  {% endif %}
+</div>
+
+<div style="height:59vh; overflow:hidden; overflow-y:scroll;">
+  <table class="table">
+    <tr scope="row">
+      <th>Item</th>
+      <th>Price</th>
+      <th>Qty</th>
+      <th>Net</th>
+    </tr>
+    {% for item in cart %}
+      <tr scope="row">
+        <td>{{item['name']}}</td>
+        <td>{{item['pricestr']}}</td>
+        <td>{{item['qty']}}</td>
+        <td>{{item['price'] * item['qty']}}</td>
+      </tr>
+    {% endfor %}
+  </table>
+</div>
+<div class="jumbotron" style="padding-top:5px; padding-bottom:5px; padding-right:20px; margin-bottom:5px;">
+  <h3 style="text-align:right; margin-top:10px">Total: ${{cart_total}}</h3>
+</div>
+{% endblock %}

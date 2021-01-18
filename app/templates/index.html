@@ -1,0 +1,26 @@
+<!-- index.html-->
+
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block body %}
+<div class="jumbotron">
+  <p>Enter a barcode below to find information about it.</p>
+  <form method="POST" action="/response">
+    UPC/EAN/UCC-13: <input type="text" name="bcval" autofocus="autofocus" required><br>
+    <input type="submit" value="Submit" hidden="yes">
+  </form>
+  {% if error %}
+    <div>
+      <p><strong>Error:</strong> {{error}}</p>
+    </div>
+  {% elif name %}
+    <div style="padding-top: 10pt;">
+      <h3><strong>Name: </strong>{{name}}</h3>
+      <h4><strong>Lowest price: $</strong>{{lpricestr}}</h4>
+      <h5><strong>Description: </strong>{{desc}}</h5>
+      <h5><strong>UPC: </strong>{{upc}}<h5>
+      <h5><strong>EAN: </strong>{{ean}}</h5>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
